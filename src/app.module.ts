@@ -4,9 +4,18 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
+let envFilePath = '.env.development';
+console.log(`Running in ${process.env.ENVIRONMENT}...`);
+
+if (process.env.ENVIRONMENT === 'PRODUCTION') {
+  envFilePath = '.env.production';
+} else if (process.env.ENVIRONMENT === 'TEST') {
+  envFilePath = '.env.testing';
+}
+
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env.development' }),
+    ConfigModule.forRoot({ envFilePath }),
     UsersModule,
     AuthModule,
     TypeOrmModule.forRoot({

@@ -6,5 +6,8 @@ declare namespace NodeJS {
     MYSQL_DB_PASS?: string;
     MYSQL_DB_NAME?: string;
     PORT?: string;
+    ENVIRONMENT: Environment;
   }
+
+  export type Environment = 'DEVELOPMENT' | 'PRODUCTION' | 'TEST';
 }
