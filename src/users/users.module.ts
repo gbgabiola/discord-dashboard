@@ -6,6 +6,12 @@ import { PostService } from './services/post/post.service';
 
 @Module({
   controllers: [UsersController, PostsController],
-  providers: [UserService, PostService],
+  providers: [
+    {
+      provide: 'USER_SERVICE',
+      useClass: UserService,
+    },
+    PostService,
+  ],
 })
 export class UsersModule {}
