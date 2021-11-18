@@ -3,6 +3,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { entities } from './typeorm';
 
 let envFilePath = '.env.development';
 console.log(`Running in ${process.env.ENVIRONMENT}...`);
@@ -25,7 +26,7 @@ if (process.env.ENVIRONMENT === 'PRODUCTION') {
       username: process.env.MYSQL_DB_USER,
       password: process.env.MYSQL_DB_PASS,
       database: process.env.MYSQL_DB_NAME,
-      entities: [],
+      entities,
       synchronize: true,
     }),
   ],
