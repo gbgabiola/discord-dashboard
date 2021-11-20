@@ -1,6 +1,6 @@
 import { Controller, Get, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
-import { DiscordAuthGuard } from 'src/auth/guards';
+import { AuthenticatedGuard, DiscordAuthGuard } from 'src/auth/guards';
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +21,7 @@ export class AuthController {
   @Get('redirect')
   @UseGuards(DiscordAuthGuard)
   redirect(@Res() res: Response) {
-    res.send(200);
+    res.sendStatus(200);
   }
 
   /**
@@ -29,7 +29,10 @@ export class AuthController {
    * Retrieve the auth status
    */
   @Get('status')
-  status() {}
+  @UseGuards(AuthenticatedGuard)
+  status() {
+    return 'ok';
+  }
 
   /**
    * GET /api/auth/logout

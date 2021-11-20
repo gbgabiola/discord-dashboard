@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { entities } from './typeorm';
+import { PassportModule } from '@nestjs/passport';
 
 let envFilePath = '.env.development';
 console.log(`Running in ${process.env.ENVIRONMENT}...`);
@@ -19,6 +20,7 @@ if (process.env.ENVIRONMENT === 'PRODUCTION') {
     ConfigModule.forRoot({ envFilePath }),
     UsersModule,
     AuthModule,
+    PassportModule.register({ session: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.MYSQL_DB_HOST,
