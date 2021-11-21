@@ -7,6 +7,8 @@ import { PassportModule } from '@nestjs/passport';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path/posix';
 import { UserResolver } from './graphql/resolvers/User.resolver';
+import { HttpModule } from '@nestjs/axios';
+import { DiscordModule } from './discord/discord.module';
 
 let envFilePath = '.env.development';
 console.log(`Running in ${process.env.ENVIRONMENT}...`);
@@ -32,16 +34,16 @@ if (process.env.ENVIRONMENT === 'PRODUCTION') {
       entities,
       synchronize: true,
     }),
+    HttpModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), 'src', 'graphql.ts'),
-      },
+      definitions: { path: join(process.cwd(), 'src', 'graphql', 'index.ts') },
       useGlobalPrefix: true,
       cors: {
         origin: 'http://localhost:3000',
       },
     }),
+    DiscordModule,
   ],
   controllers: [],
   providers: [UserResolver],

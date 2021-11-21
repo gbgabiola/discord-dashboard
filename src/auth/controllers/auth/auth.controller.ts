@@ -21,7 +21,7 @@ export class AuthController {
   @Get('redirect')
   @UseGuards(DiscordAuthGuard)
   redirect(@Res() res: Response) {
-    res.sendStatus(200);
+    res.redirect('http://localhost:3000/dashboard');
   }
 
   /**
@@ -39,5 +39,8 @@ export class AuthController {
    * Log the user out to destroy the session
    */
   @Get('logout')
-  logout() {}
+  @UseGuards(AuthenticatedGuard)
+  logout(@Req() req: Request) {
+    req.logout();
+  }
 }
