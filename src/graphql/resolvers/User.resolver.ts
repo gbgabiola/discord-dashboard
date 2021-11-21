@@ -5,8 +5,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { GqlExecutionContext, Query, Resolver } from '@nestjs/graphql';
-import { GraphQLAuthGuard } from 'src/auth/guards';
 import { AuthenticationProvider } from 'src/auth/services/auth/auth';
+import { GraphQLAuthGuard } from 'src/auth/utils/Guards';
 import { User } from 'src/typeorm';
 
 export const CurrentUser = createParamDecorator(
