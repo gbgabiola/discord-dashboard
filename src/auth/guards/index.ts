@@ -1,4 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
@@ -15,7 +16,14 @@ export class DiscordAuthGuard extends AuthGuard('discord') {
 export class AuthenticatedGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    console.log(req.isAuthenticated());
     return req.isAuthenticated();
+  }
+}
+
+@Injectable()
+export class GraphQLAuthGuard implements CanActivate {
+  canActivate(context: ExecutionContext) {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req.user;
   }
 }

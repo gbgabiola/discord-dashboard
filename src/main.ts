@@ -8,9 +8,13 @@ import { TypeormStore } from 'connect-typeorm';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 3001;
   const sessionRepo = getRepository(TypeORMSession);
   app.setGlobalPrefix('api');
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+  });
   app.use(
     session({
       cookie: {
